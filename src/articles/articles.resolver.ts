@@ -10,13 +10,13 @@ export class ArticlesResolver {
         id: '1',
         title: 'Article 1',
         author: 'John Doe',
-        content: 'This is the content of article 1',
+        content: 'This is the content of article 66',
       },
       {
         id: '2',
         title: 'Article 2',
         author: 'Jane Doe',
-        content: 'This is the content of article 2',
+        content: 'This is the content of article 55',
       },
     ];
   }
