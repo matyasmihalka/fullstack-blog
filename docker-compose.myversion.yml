@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+      # No need to map node_modules with Yarn PnP
+    environment:
+      NODE_ENV: development
+    command: yarn run start:dev
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

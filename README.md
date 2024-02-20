@@ -13,7 +13,7 @@ $ yarn install
 ```bash
 # development
 $ yarn run start
-$ docker-compose up
+$ docker-compose up -d
 
 # watch mode
 $ yarn run start:dev
