@@ -35,6 +35,18 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+## Useful commands
+
+```bash
+# run migration when using docker compose
+$ docker-compose exec nest-api npx prisma migrate dev
+
+# rebuilding changed containers
+$ docker-compose up --build
+
+$ docker-compose up -d
+```
+
 ## Next steps
 
 - [ ] Implement Postgres DB with Prisma and add Articles model

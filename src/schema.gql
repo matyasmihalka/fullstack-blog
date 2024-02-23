@@ -10,5 +10,6 @@ type Article {
 }
 
 type Query {
+  article(id: Float!): Article
   articles: [Article!]!
 }
