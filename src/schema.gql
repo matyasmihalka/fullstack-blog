@@ -5,11 +5,30 @@
 type Article {
   author: String!
   content: String!
-  id: String!
+  id: Float!
   title: String!
+}
+
+input CreateArticleInput {
+  author: String!
+  content: String!
+  title: String!
+}
+
+type Mutation {
+  createArticle(createArticleInput: CreateArticleInput!): Article!
+  deleteArticle(id: String!): Article!
+  updateArticle(updateArticleInput: UpdateArticleInput!): Article!
 }
 
 type Query {
   article(id: Float!): Article
   articles: [Article!]!
+}
+
+input UpdateArticleInput {
+  author: String
+  content: String
+  id: ID!
+  title: String
 }

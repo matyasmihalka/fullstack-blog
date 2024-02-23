@@ -49,8 +49,8 @@ $ docker-compose up -d
 
 ## Next steps
 
-- [ ] Implement Postgres DB with Prisma and add Articles model
-- [ ] Add mutation to feature to Articles trough GraphGL
+- [x] Implement Postgres DB with Prisma and add Articles model
+- [x] Add mutation to feature to Articles trough GraphGL
 - [ ] Add user registration with Oauth 2 and Google
 - [ ] Restrict the Articles mutation to logged in users
 - [ ] Add for each user a custom domain where they can add their blog Articles

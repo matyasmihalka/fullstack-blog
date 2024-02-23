@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, Article } from '@prisma/client';
+import { CreateArticleInput } from './dto/create-article.input';
+import { UpdateArticleInput } from './dto/update-article.input';
 
 @Injectable()
 export class ArticlesService {
@@ -18,5 +20,28 @@ export class ArticlesService {
       );
     }
     return article;
+  }
+
+  async create(createArticleInput: CreateArticleInput) {
+    return this.prisma.article.create({
+      data: createArticleInput,
+    });
+  }
+
+  async update(id: string, updateArticleInput: UpdateArticleInput) {
+    return this.prisma.article.update({
+      where: { id: Number(id) },
+      data: { ...updateArticleInput, id: Number(id) },
+    });
+  }
+
+  async delete(id: string) {
+    return this.prisma.article.delete({
+      where: { id: Number(id) },
+    });
+  }
+
+  async findAll(): Promise<Article[]> {
+    return this.prisma.article.findMany();
   }
 }
