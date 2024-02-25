@@ -54,3 +54,5 @@ $ docker-compose up -d
 - [ ] Add user registration with Oauth 2 and Google
 - [ ] Restrict the Articles mutation to logged in users
 - [ ] Add for each user a custom domain where they can add their blog Articles
+- [ ] Add HTTPS for complete application
+- [ ] Create a monorepo with NX.dev and connect it with the FE part
