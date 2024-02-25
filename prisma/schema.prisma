@@ -17,3 +17,12 @@ model Article {
   author    String
   createdAt DateTime @default(now())
 }
+
+model User {
+  id            String   @id @default(uuid()) // Use UUID for user IDs
+  email         String   @unique // User's email address
+  displayName          String?  // User's full name, optional
+  profilePicture String? // URL to the user's profile picture, optional
+  createdAt     DateTime @default(now()) // Timestamp of when the user was created
+  updatedAt     DateTime @updatedAt // Timestamp of the last update to the user's record
+}
