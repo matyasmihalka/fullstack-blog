@@ -20,8 +20,8 @@ COPY . .
 # Build your app (if necessary)
 # RUN yarn build
 
-# Map port 3000 to the outside world
-EXPOSE 3000
+# Map port 3001 to the outside world
+EXPOSE 3001
 
 # Define the command to run your app
 # CMD [ "node", "dist/main" ]
