@@ -1,17 +1,27 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { GoogleAuthGuard } from './utils/Guards';
+import { Controller, Get, Inject, Req, Res, UseGuards } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/auth')
 export class AuthController {
+  constructor(
+    @Inject('AUTH_SERVICE') private readonly authService: AuthService,
+  ) {}
+
   @Get('google/login')
-  @UseGuards(GoogleAuthGuard)
+  @UseGuards(AuthGuard('google'))
   handleLogin() {
     return { message: 'Redirect to Google' };
   }
 
   @Get('google/redirect')
-  @UseGuards(GoogleAuthGuard)
-  handleRedirect() {
-    return { message: 'Google redirect' };
+  @UseGuards(AuthGuard('google'))
+  handleRedirect(
+    @Req() req: { user: { accessToken: string } },
+    @Res() res: any,
+  ) {
+    const jwt = req.user.accessToken;
+
+    return res.redirect(`http://yourfrontend.com?token=${jwt}`);
   }
 }

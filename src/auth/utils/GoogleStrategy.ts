@@ -4,7 +4,7 @@ import { Profile, Strategy } from 'passport-google-oauth20';
 import { AuthService } from '../auth.service';
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy) {
+export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(
     @Inject('AUTH_SERVICE') private readonly authService: AuthService,
   ) {
@@ -28,6 +28,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
       displayName: profile.displayName,
     });
 
-    return user;
+    // Now generate JWT for the user
+    const { jwt } = await this.authService.login(user);
+
+    return { userId: user.id, email: user.email, accessToken: jwt };
   }
 }
