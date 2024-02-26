@@ -47,6 +47,10 @@ $ docker-compose up --build
 $ docker-compose up -d
 ```
 
+## Repo ready to be used with Google Oauth2.0 on commit:
+
+1dfd7dea67874379a43c9598b93706004517bcc8
+
 ## Next steps
 
 - [x] Implement Postgres DB with Prisma and add Articles model
