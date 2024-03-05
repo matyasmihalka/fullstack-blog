@@ -1,19 +1,18 @@
-version: "3.8"
+version: '3.8'
 services:
   nest-api:
     container_name: nest-api
-    env_file:
-      - ./packages/backend/.env
     build:
-      context: ./packages/backend
+      context: .
       dockerfile: Dockerfile
     ports:
-      - "${PORT}:${PORT}"
+      - '${PORT}:${PORT}'
     depends_on:
       - postgres
-
+    env_file:
+      - .env
     volumes:
-      - ./packages/backend:/usr/src/app # Mount the current directory to the workdir in the container
+      - .:/usr/src/app # Mount the current directory to the workdir in the container
       - /usr/src/app/node_modules # Use a Docker volume for node_modules to avoid overwriting with the local node_modules
 
   postgres:
@@ -21,9 +20,9 @@ services:
     container_name: postgres
     restart: always
     ports:
-      - "5432:5432"
+      - '5432:5432'
     env_file:
-      - ./packages/backend/.env
+      - .env
     volumes:
       - postgres:/var/lib/postgresql/data
 
@@ -34,16 +33,14 @@ services:
       - postgres
     container_name: prisma-studio
     ports:
-      - "5555:5555"
+      - '5555:5555'
     build:
-      context: ./packages/backend/prismaStudio
+      context: prismaStudio
       dockerfile: Dockerfile
-    env_file:
-      - ./packages/backend/.env
     environment:
       DATABASE_URL: ${DATABASE_URL}
     volumes:
-      - ./packages/backend/prisma:/app/prisma
+      - ./prisma:/app/prisma
 
 volumes:
   postgres:
