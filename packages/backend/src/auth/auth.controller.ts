@@ -1,6 +1,7 @@
 import { Controller, Get, Inject, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
+import { Response } from 'express';
 
 @Controller('api/auth')
 export class AuthController {
@@ -22,6 +23,24 @@ export class AuthController {
   ) {
     const jwt = req.user.accessToken;
 
-    return res.redirect(`http://localhost:5173?token=${jwt}`);
+    // Set the JWT in an HTTP-only cookie
+    res.cookie('Authentication', jwt, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      sameSite: 'strict', // Strictly same site
+      path: '/',
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours for example
+    });
+
+    return res.redirect(`http://localhost:5173`);
+  }
+
+  @Get('logout')
+  async logout(@Res() response: Response) {
+    response.cookie('Authentication', '', {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    return response.sendStatus(200);
   }
 }

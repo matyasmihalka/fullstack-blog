@@ -14,7 +14,7 @@ services:
 
     volumes:
       - ./packages/backend:/usr/src/app # Mount the current directory to the workdir in the container
-      - /usr/src/app/node_modules # Use a Docker volume for node_modules to avoid overwriting with the local node_modules
+      # - /usr/src/app/node_modules # Use a Docker volume for node_modules to avoid overwriting with the local node_modules
 
   postgres:
     image: postgres:15

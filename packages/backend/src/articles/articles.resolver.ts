@@ -3,12 +3,15 @@ import { Article } from './models/article.model';
 import { ArticlesService } from './articles.service';
 import { CreateArticleInput } from './dto/create-article.input';
 import { UpdateArticleInput } from './dto/update-article.input';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/gurads/JwtAuthGuard';
 
 @Resolver(() => Article)
 export class ArticlesResolver {
   constructor(private articlesService: ArticlesService) {}
 
   @Query(() => Article, { nullable: true })
+  @UseGuards(JwtAuthGuard)
   async article(@Args('id') id: number): Promise<Article | null> {
     const article = await this.articlesService.article({ id });
     if (article) {
