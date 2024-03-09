@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "start:backend": "yarn workspace backend start:dev",
+    "start:frontend": "yarn workspace frontend dev",
     "docker:start:backend": "yarn workspace backend docker:start",
     "prisma:generate": "yarn workspace backend prisma:generate"
   }

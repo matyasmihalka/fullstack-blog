@@ -22,6 +22,6 @@ export class AuthController {
   ) {
     const jwt = req.user.accessToken;
 
-    return res.redirect(`http://yourfrontend.com?token=${jwt}`);
+    return res.redirect(`http://localhost:5173?token=${jwt}`);
   }
 }
