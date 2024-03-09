@@ -1,4 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
@@ -10,17 +15,17 @@ export class JwtAuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    console.log('JwtAuthGuard');
     // Convert the execution context into a GQL execution context
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
 
-    console.log('request', request);
     const token = request.cookies['Authentication'];
 
     console.log('token', token);
+
     if (!token) {
-      return false;
+      console.log('throwing');
+      throw new UnauthorizedException('Authentication token not found.');
     }
     try {
       console.log('token', token, this.jwtService.verify(token));
@@ -28,7 +33,9 @@ export class JwtAuthGuard implements CanActivate {
       request.user = decoded; // Optionally attach user info to the request
       return true;
     } catch (e) {
-      return false;
+      throw new UnauthorizedException(
+        'Invalid or expired authentication token.',
+      );
     }
   }
 }
