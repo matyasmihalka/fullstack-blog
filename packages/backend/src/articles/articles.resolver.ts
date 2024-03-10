@@ -14,6 +14,7 @@ export class ArticlesResolver {
   @UseGuards(JwtAuthGuard)
   async article(@Args('id') id: number): Promise<Article | null> {
     const article = await this.articlesService.article({ id });
+    console.log('article', article);
     if (article) {
       return article;
     }

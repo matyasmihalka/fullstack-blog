@@ -1,37 +1,24 @@
-const graphqlQuery = {
-  query: `
-    query {
-      article(id: 2) {
-        id
-        title
-        content
-        author
-      }
+import { gql, useQuery } from "@apollo/client";
+import { client } from "./main";
+
+const articleQuery = gql`
+  query GetArticle {
+    article(id: 2) {
+      id
+      title
+      content
+      author
     }
-  `,
-};
+  }
+`;
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const { data } = useQuery(articleQuery);
+
+  console.log("Data from server:", data);
 
   const handleClick = async () => {
     window.location.href = "//localhost:3001/api/auth/google/login";
-  };
-
-  const handleArticleQuery = async () => {
-    const response = await fetch("//localhost:3001/graphql", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        // "Access-Control-Allow-Credentials": "true",
-      },
-      body: JSON.stringify(graphqlQuery),
-    });
-
-    const json = await response.json();
-
-    console.log("Data from server:", json.data);
   };
 
   const handleLogout = async () => {
@@ -41,12 +28,14 @@ function App() {
     });
 
     console.log("Logout response:", response);
+
+    await client.resetStore();
   };
 
   return (
     <>
       <button onClick={handleClick}>Sign up with google</button>
-      <button onClick={handleArticleQuery}>Query article</button>
+      {/* <button onClick={handleArticleQuery}>Query article</button> */}
       <button onClick={handleLogout}>Logout</button>
     </>
   );
