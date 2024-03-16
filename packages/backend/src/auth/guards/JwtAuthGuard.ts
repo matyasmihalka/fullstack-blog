@@ -15,11 +15,27 @@ export class JwtAuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    // Convert the execution context into a GQL execution context
-    const ctx = GqlExecutionContext.create(context);
-    const request = ctx.getContext().req;
+    const graphqlCtx = GqlExecutionContext.create(context);
+    const httpRequest = context.switchToHttp().getRequest();
 
-    const token = request.cookies['Authentication'];
+    const graphQlRequest = graphqlCtx.getContext().req;
+
+    let token = '';
+
+    if (httpRequest) {
+      token = httpRequest.cookies['Authentication'];
+    } else if (graphQlRequest) {
+      token = graphQlRequest.cookies['Authentication'];
+    } else {
+      throw new Error('Could not find request object in context');
+    }
+
+    // const request =
+    //   ctx.getType() === 'http'
+    //     ? context.switchToHttp().getRequest()
+    //     : ctx.getContext().req;
+
+    // const token = request.cookies['Authentication'];
 
     console.log('token', token);
 
@@ -29,8 +45,8 @@ export class JwtAuthGuard implements CanActivate {
     }
     try {
       console.log('token', token, this.jwtService.verify(token));
-      const decoded = this.jwtService.verify(token);
-      request.user = decoded; // Optionally attach user info to the request
+      // const decoded = this.jwtService.verify(token);
+      // request.user = decoded; // Optionally attach user info to the request
       return true;
     } catch (e) {
       throw new UnauthorizedException(

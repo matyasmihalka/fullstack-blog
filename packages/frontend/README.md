@@ -32,3 +32,7 @@ export default {
 ## Notes
 
 I decided to use Apollo client instead of TanStack Query. TanStack Query recommends to use `graphql-request` as a client that is hard to configure with authentication middlewares. Probably I could exchange it for `ky` but at this point Apollo vlinet support what I need so I just decided to exchange.
+
+## ToDos
+
+- Consider rewriting the fronted to Remix

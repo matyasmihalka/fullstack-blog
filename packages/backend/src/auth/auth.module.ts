@@ -4,7 +4,7 @@ import { GoogleStrategy } from './utils/GoogleStrategy';
 import { AuthService } from './auth.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtAuthGuard } from './gurads/JwtAuthGuard';
+import { JwtAuthGuard } from './guards/JwtAuthGuard';
 
 @Module({
   imports: [

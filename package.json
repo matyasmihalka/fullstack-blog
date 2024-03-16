@@ -8,6 +8,8 @@
   "scripts": {
     "start:backend": "yarn workspace backend start:dev",
     "start:frontend": "yarn workspace frontend dev",
+    "fe:build": "yarn workspace frontend build",
+    "fe:preview": "yarn workspace frontend preview",
     "docker:start:backend": "yarn workspace backend docker:start",
     "prisma:generate": "yarn workspace backend prisma:generate"
   }

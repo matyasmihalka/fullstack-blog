@@ -1,29 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Article from "./Article.tsx";
+
+import ErrorPage from "./ErrorPage.tsx";
+import LoginPage from "./LoginPage.tsx";
 import App from "./App.tsx";
 
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from "@apollo/client";
-
-const link = createHttpLink({
-  uri: "//localhost:3001/graphql",
-  credentials: "include",
-});
-
-export const client = new ApolloClient({
-  uri: "//localhost:3001/graphql",
-  cache: new InMemoryCache(),
-  link,
-});
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: "/", element: <Article /> },
+      { path: "/login", element: <LoginPage /> },
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );

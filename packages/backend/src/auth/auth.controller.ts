@@ -2,6 +2,7 @@ import { Controller, Get, Inject, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
+import { JwtAuthGuard } from './guards/JwtAuthGuard';
 
 @Controller('api/auth')
 export class AuthController {
@@ -32,7 +33,21 @@ export class AuthController {
       maxAge: 24 * 60 * 60 * 1000, // 24 hours for example
     });
 
-    return res.redirect(`http://localhost:5173`);
+    const origin = process.env.FE_URL;
+
+    return res.redirect(origin);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('validate')
+  validate(/*@Req()  req: Request */) {
+    // If the request reaches this point, it means the JWT is valid
+    // You can return any user-related information as needed, or simply an acknowledgment
+    return {
+      valid: true,
+      // userId: req.user.userId,
+      // username: req.user.username,
+    };
   }
 
   @Get('logout')
