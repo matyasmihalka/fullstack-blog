@@ -6,11 +6,13 @@ import { UserInfo } from "@shared/types";
 export const AuthContext = createContext<{
   isLoggedIn: boolean;
   isAuthenticating: boolean;
+  user: UserInfo | null;
   logout: () => void;
 }>({
   isLoggedIn: false,
   isAuthenticating: false,
   logout: () => {},
+  user: null,
 });
 
 interface AuthProviderProps {
@@ -40,6 +42,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
         if (response.ok) {
           setIsLoggedIn(true); // User is logged in
+          //ToDo: Type check this
+          const data = await response.json();
+          setUser(data.user);
         } else {
           setIsLoggedIn(false); // User is not logged in
         }
@@ -69,7 +74,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, logout, isAuthenticating: isLoading }}
+      value={{ isLoggedIn, logout, isAuthenticating: isLoading, user }}
     >
       {children}
     </AuthContext.Provider>

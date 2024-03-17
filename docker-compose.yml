@@ -5,16 +5,15 @@ services:
     env_file:
       - ./packages/backend/.env
     build:
-      context: ./packages/backend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./packages/backend/Dockerfile
     ports:
       - "${PORT}:${PORT}"
     depends_on:
       - postgres
 
     volumes:
-      - ./packages/backend:/usr/src/app # Mount the current directory to the workdir in the container
-      # - /usr/src/app/node_modules # Use a Docker volume for node_modules to avoid overwriting with the local node_modules
+      - ./packages/backend:/usr/src/app/packages/backend # Mount the current directory to the workdir in the container
 
   postgres:
     image: postgres:15
