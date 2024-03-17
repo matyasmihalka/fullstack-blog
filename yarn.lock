@@ -2060,6 +2060,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@shared/types@npm:1.0.0, @shared/types@workspace:packages/types":
+  version: 0.0.0-use.local
+  resolution: "@shared/types@workspace:packages/types"
+  languageName: unknown
+  linkType: soft
+
 "@sinclair/typebox@npm:^0.27.8":
   version: 0.27.8
   resolution: "@sinclair/typebox@npm:0.27.8"
@@ -3389,6 +3395,7 @@ __metadata:
     "@nestjs/schematics": "npm:^9.0.0"
     "@nestjs/testing": "npm:^9.0.0"
     "@prisma/client": "npm:5.9.1"
+    "@shared/types": "npm:1.0.0"
     "@types/cookie-parser": "npm:^1"
     "@types/express": "npm:^4.17.13"
     "@types/jest": "npm:29.2.4"
@@ -5005,6 +5012,7 @@ __metadata:
   resolution: "frontend@workspace:packages/frontend"
   dependencies:
     "@apollo/client": "npm:^3.9.6"
+    "@shared/types": "npm:1.0.0"
     "@types/react": "npm:^18.2.56"
     "@types/react-dom": "npm:^18.2.19"
     "@typescript-eslint/eslint-plugin": "npm:^7.0.2"

@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { client } from "../client";
+import { UserInfo } from "@shared/types";
 
 export const AuthContext = createContext<{
   isLoggedIn: boolean;
@@ -19,6 +20,7 @@ interface AuthProviderProps {
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<UserInfo | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,20 +28,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       navigate("/login");
     }
   }, [isLoggedIn, navigate, isLoading]);
-
-  const logout = async () => {
-    const response = await fetch("//localhost:3001/api/auth/logout", {
-      method: "GET",
-      credentials: "include", // Necessary to include the HTTP-only cookie in the request
-    });
-
-    setIsLoggedIn(false);
-    navigate("/login");
-
-    console.log("logout: ", response);
-
-    await client.resetStore();
-  };
 
   // Attempt to validate the session on initial load
   useEffect(() => {
@@ -64,6 +52,20 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     validateSession();
   }, []);
+
+  const logout = async () => {
+    const response = await fetch("//localhost:3001/api/auth/logout", {
+      method: "GET",
+      credentials: "include", // Necessary to include the HTTP-only cookie in the request
+    });
+
+    setIsLoggedIn(false);
+    navigate("/login");
+
+    console.log("logout: ", response);
+
+    await client.resetStore();
+  };
 
   return (
     <AuthContext.Provider

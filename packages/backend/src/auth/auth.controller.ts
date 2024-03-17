@@ -3,6 +3,9 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 import { JwtAuthGuard } from './guards/JwtAuthGuard';
+import { UserInfo } from '@shared/types';
+
+type RequestWithUser = Request & { user: UserInfo };
 
 @Controller('api/auth')
 export class AuthController {
@@ -19,10 +22,13 @@ export class AuthController {
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
   handleRedirect(
-    @Req() req: { user: { accessToken: string } },
+    @Req() req: { user: { accessToken: string; userName: string } },
     @Res() res: any,
   ) {
     const jwt = req.user.accessToken;
+    const userName = req.user.userName;
+
+    console.log('user name: ', userName);
 
     // Set the JWT in an HTTP-only cookie
     res.cookie('Authentication', jwt, {
@@ -40,13 +46,13 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('validate')
-  validate(/*@Req()  req: Request */) {
+  validate(@Req() req: RequestWithUser) {
+    console.log('req: ', req.user);
     // If the request reaches this point, it means the JWT is valid
     // You can return any user-related information as needed, or simply an acknowledgment
     return {
       valid: true,
-      // userId: req.user.userId,
-      // username: req.user.username,
+      user: req.user,
     };
   }
 
