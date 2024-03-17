@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useAuthCtx } from "./AuthContext/useAuthCtx";
 
 const LoginPage = () => {
-  const { isLoggedIn } = useAuthCtx();
+  const { user } = useAuthCtx();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (user) {
       navigate("/"); // Redirect to the root page if already logged in
     }
-  }, [isLoggedIn, navigate]);
+  }, [user, navigate]);
 
   const handleClick = async () => {
     window.location.href = "//localhost:3001/api/auth/google/login";

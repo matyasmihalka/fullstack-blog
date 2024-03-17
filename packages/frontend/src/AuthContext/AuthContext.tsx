@@ -4,12 +4,10 @@ import { client } from "../client";
 import { UserInfo } from "@shared/types";
 
 export const AuthContext = createContext<{
-  isLoggedIn: boolean;
   isAuthenticating: boolean;
   user: UserInfo | null;
   logout: () => void;
 }>({
-  isLoggedIn: false,
   isAuthenticating: false,
   logout: () => {},
   user: null,
@@ -20,16 +18,15 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<UserInfo | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn && !isLoading) {
+    if (!user && !isLoading) {
       navigate("/login");
     }
-  }, [isLoggedIn, navigate, isLoading]);
+  }, [user, navigate, isLoading]);
 
   // Attempt to validate the session on initial load
   useEffect(() => {
@@ -41,15 +38,13 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         });
 
         if (response.ok) {
-          setIsLoggedIn(true); // User is logged in
-          //ToDo: Type check this
           const data = await response.json();
-          setUser(data.user);
+          setUser(data.user); // User is logged in
         } else {
-          setIsLoggedIn(false); // User is not logged in
+          setUser(null); // User is not logged in
         }
       } catch (error) {
-        setIsLoggedIn(false);
+        setUser(null);
       } finally {
         setIsLoading(false);
       }
@@ -64,7 +59,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       credentials: "include", // Necessary to include the HTTP-only cookie in the request
     });
 
-    setIsLoggedIn(false);
+    setUser(null);
     navigate("/login");
 
     console.log("logout: ", response);
@@ -73,9 +68,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ isLoggedIn, logout, isAuthenticating: isLoading, user }}
-    >
+    <AuthContext.Provider value={{ logout, isAuthenticating: isLoading, user }}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,10 +2,10 @@ import { Outlet, Link, useLocation } from "react-router-dom";
 import { useAuthCtx } from "./AuthContext/useAuthCtx";
 
 const Root = () => {
-  const { isLoggedIn, logout, isAuthenticating } = useAuthCtx();
+  const { user, logout, isAuthenticating } = useAuthCtx();
   const { pathname } = useLocation();
 
-  console.log("isLoggedIn", isLoggedIn);
+  console.log("isLoggedIn", user);
 
   const isLoginPage = pathname === "/login";
 
@@ -20,8 +20,9 @@ const Root = () => {
     <div>
       <nav>
         <div>Blog engine Header</div>
-        {isLoggedIn && !isLoginPage && <button onClick={logout}>Logout</button>}
-        {!isLoggedIn && !isLoginPage && <Link to="login">Login</Link>}
+        {user && !isLoginPage && <button onClick={logout}>Logout</button>}
+        {!user && !isLoginPage && <Link to="login">Login</Link>}
+        {user && <div>{user.displayName}</div>}
       </nav>
       <Outlet />
     </div>
