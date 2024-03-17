@@ -28,9 +28,16 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       displayName: profile.displayName,
     });
 
+    console.log('user: ', user);
+
     // Now generate JWT for the user
     const { jwt } = await this.authService.login(user);
 
-    return { userId: user.id, email: user.email, accessToken: jwt };
+    return {
+      userId: user.id,
+      email: user.email,
+      userName: user.displayName,
+      accessToken: jwt,
+    };
   }
 }

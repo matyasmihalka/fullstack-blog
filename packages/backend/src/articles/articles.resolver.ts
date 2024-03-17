@@ -4,7 +4,7 @@ import { ArticlesService } from './articles.service';
 import { CreateArticleInput } from './dto/create-article.input';
 import { UpdateArticleInput } from './dto/update-article.input';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/gurads/JwtAuthGuard';
+import { JwtAuthGuard } from 'src/auth/guards/JwtAuthGuard';
 
 @Resolver(() => Article)
 export class ArticlesResolver {
@@ -14,6 +14,7 @@ export class ArticlesResolver {
   @UseGuards(JwtAuthGuard)
   async article(@Args('id') id: number): Promise<Article | null> {
     const article = await this.articlesService.article({ id });
+    console.log('article', article);
     if (article) {
       return article;
     }
