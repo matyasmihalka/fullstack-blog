@@ -6,13 +6,13 @@ const Root = () => {
   const { isAuthenticating } = useAuthCtx();
 
   return (
-    <div className="bg-zinc-50 dark:bg-zinc-950 flex flex-col h-screen">
+    <div className="flex h-screen flex-col bg-zinc-50 dark:bg-zinc-950">
       {isAuthenticating ? (
         <div>Loading...</div>
       ) : (
         <>
           <MainNav />
-          <div className="px-8 flex-grow overflow-auto">
+          <div className="flex-grow overflow-auto px-8">
             <Outlet />
           </div>
         </>
