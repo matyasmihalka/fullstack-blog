@@ -54,15 +54,14 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const logout = async () => {
-    const response = await fetch("//localhost:3001/api/auth/logout", {
+    setUser(null);
+
+    await fetch("//localhost:3001/api/auth/logout", {
       method: "GET",
       credentials: "include", // Necessary to include the HTTP-only cookie in the request
     });
 
-    setUser(null);
     navigate("/login");
-
-    console.log("logout: ", response);
 
     await client.resetStore();
   };

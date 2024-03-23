@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { Typography } from "./components/typography/typography";
 
 const articleQuery = gql`
   query GetArticle {
@@ -22,16 +23,21 @@ function App() {
 
   return (
     <>
-      <h1>Articles page </h1>
+      <Typography variant="h3" as="h2">
+        Articles page
+      </Typography>
       {data?.article ? (
         <>
-          <h1>Article</h1>
-          <h2>{data.article.title}</h2>
-          <p>{data.article.content}</p>
-          <p>By: {data.article.author}</p>
+          <Typography variant="h4" as="h3">
+            {data.article.title}
+          </Typography>
+          <Typography>{data.article.content}</Typography>
+          <Typography>By: {data.article.author}</Typography>
         </>
       ) : (
-        "No article found"
+        <Typography variant="h4" as="h3">
+          No article found
+        </Typography>
       )}
     </>
   );

@@ -1,30 +1,20 @@
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useAuthCtx } from "./AuthContext/useAuthCtx";
+import { MainNav } from "./MainNav";
 
 const Root = () => {
-  const { user, logout, isAuthenticating } = useAuthCtx();
-  const { pathname } = useLocation();
-
-  console.log("isLoggedIn", user);
-
-  const isLoginPage = pathname === "/login";
-
-  console.log("isLoginPage", isLoginPage);
-  console.log("isAuthenticating", isAuthenticating);
+  const { isAuthenticating } = useAuthCtx();
 
   if (isAuthenticating) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <nav>
-        <div>Blog engine Header</div>
-        {user && !isLoginPage && <button onClick={logout}>Logout</button>}
-        {!user && !isLoginPage && <Link to="login">Login</Link>}
-        {user && <div>{user.displayName}</div>}
-      </nav>
-      <Outlet />
+    <div className="bg-zinc-50 dark:bg-zinc-950 flex flex-col h-screen">
+      <MainNav />
+      <div className="px-8 flex-grow overflow-auto">
+        <Outlet />
+      </div>
     </div>
   );
 };
