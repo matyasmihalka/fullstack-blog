@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
-import { useAuthCtx } from "./AuthContext/useAuthCtx";
+import { useAuthCtx } from "../../auth/AuthContext/useAuthCtx";
 import { useLocation, Link } from "react-router-dom";
-import { Typography } from "./components/typography/typography";
-import { ModeToggle } from "./components/ModeToggle";
-import { Button } from "./components/ui/button";
+import { Typography } from "../typography";
+import { ModeToggle } from "../theme/ModeToggle";
+import { Button } from "../components/button";
 
 export function MainNav({
   className,

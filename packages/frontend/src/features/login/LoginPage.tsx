@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthCtx } from "./AuthContext/useAuthCtx";
-import { Button } from "@/components/ui/button";
-import { Google } from "./components/icons/Google";
+import { useAuthCtx } from "../auth/AuthContext/useAuthCtx";
+import { Button } from "@/features/ui/components/button";
+import { Google } from "../ui/icons/Google";
 
 const LoginPage = () => {
   const { user } = useAuthCtx();

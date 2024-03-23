@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { Typography } from "./components/typography/typography";
+import { Typography } from "../ui/typography";
 
 const articleQuery = gql`
   query GetArticle {

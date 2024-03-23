@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { useAuthCtx } from "./AuthContext/useAuthCtx";
-import { MainNav } from "./MainNav";
+import { useAuthCtx } from "../features/auth/AuthContext/useAuthCtx";
+import { MainNav } from "../features/ui/composits/MainNav";
 
 const Root = () => {
   const { isAuthenticating } = useAuthCtx();

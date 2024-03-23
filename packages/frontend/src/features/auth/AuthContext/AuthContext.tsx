@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { client } from "../client";
+import { client } from "../../api/client";
 import { UserInfo } from "@shared/types";
 
 export const AuthContext = createContext<{
