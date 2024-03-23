@@ -22,6 +22,12 @@ To run frontend, in a standalone terminal run the command below from root:
 yarn start:frontend
 ```
 
+Add Shadcn UI components to frontend workspace
+
+```
+yarn workspace frontend exec -- npx shadcn-ui@latest add <component-name>
+```
+
 # ToDos
 
 - [x] Implement Postgres DB with Prisma and add Articles model
